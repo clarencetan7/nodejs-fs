@@ -1,11 +1,12 @@
 const fs = require('fs')
 const express = require('express')
+const querystring = require('querystring')
 
 const port = process.env.PORT || 1337
 const app = express()
 
 function respondText(req, res){
-    res.end('Hi there! I\'m using express')
+    res.end('Hi there! I\'m using express!! \'sup')
 }
 
 function respondJson(req, res){
@@ -22,7 +23,7 @@ function respondEcho(req, res){
     const {input = ''} = querystring.parse(
         req.url
         .split('?')
-        .slice(0)
+        .slice(1)
         .join('')
     )
 
@@ -39,8 +40,16 @@ function respondEcho(req, res){
         })
     )
 }
+
+function respondStatic(req, res){
+    const filename = `${__dirname}/../public${req.url.split('/static')[1]}`
+    fs.createReadStream(filename)
+    .on('error', () => respondNotFound(req, res))
+    .pipe(res)
+}
+
 app.get('/', respondText)
 app.get('/json', respondJson)
-app.get('/echo/*', respondEcho)
-
+app.get('/echo', respondEcho)
+app.get('/static/*', respondStatic)
 app.listen(port, () => console.log(`The app is working and listening on port ${port}`));

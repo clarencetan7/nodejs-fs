@@ -17,7 +17,7 @@ function respondEcho(req, res){
     const {input = ''} = querystring.parse(
         req.url
         .split('?')
-        .slice(0)
+        .slice(1)
         .join('')
     )
 

@@ -6,10 +6,13 @@
   "dependencies": {
     "express": "^4.17.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startexpress" : "node ./basicexpress/routeexpress.js"
+    "startexpress": "nodemon ./basicexpress/routeexpress.js",
+    "another" : "nodemon ./basicrouting/routing1.js"
   },
   "author": "",
   "license": "ISC"
